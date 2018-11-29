@@ -575,8 +575,8 @@ INSERT INTO s_user
 , s_user_password
 )
 VALUES
-( $1::str
-, $2::str
+( $1::text
+, $2::text
 );
 
 --	addRecipe.general
@@ -585,8 +585,8 @@ INSERT INTO recipe
 , recipe_desc
 , s_user_id)
 VALUES
-( $1::str
-, $2::str
+( $1::text
+, $2::text
 , $3::int
 );
 
@@ -598,7 +598,7 @@ INSERT INTO ingredient
 , recipe_id
 )
 VALUES
-( $1::str
+( $1::text
 , $2::int
 , $3::int
 , $4::int
@@ -611,7 +611,7 @@ INSERT INTO instruction
 , recipe_id
 )
 VALUES
-( $1::str
+( $1::text
 , $2::int
 , $3::int
 );
@@ -644,34 +644,36 @@ ORDER BY instruction_order ASC;
 --	updateRecipe.general
 UPDATE recipe
 SET 
-  recipe_name = $1:str
-, recipe_desc = $2::str
+  recipe_name = $1::text
+, recipe_desc = $2::text
 , s_user_id = $3::int
 WHERE recipe_id = $4::int;
 
 --	updateRecipe.ingredient
 UPDATE ingredient
-  ingredient_name = $1::str
+SET 
+  ingredient_name = $1::text
 , amount = $2::int
 , measurement_id = $3::int
 WHERE ingredient_id = $4::int;
 
 --	updateRecipe.instructions
 UPDATE instruction
-  instruction_desc = $1::str
+SET
+  instruction_desc = $1::text
 WHERE instruction_id = $2::int;
 
---	deleteRecipe.general
+--	deleteRecipeAll.general
 DELETE FROM recipe
 WHERE recipe_id = $1::int;
 
 --	deleteRecipe.ingredient
 DELETE FROM ingredient
-WHERE recipe_id = $1::int;
+WHERE ingredient_id = $1::int;
 
 --	deleteRecipe.instructions
 DELETE FROM instruction
-WHERE recipe_id = $1::int;
+WHERE instruction_id = $1::int;
 
 -- HELPER QUERIES 
 
