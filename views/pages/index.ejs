@@ -1,66 +1,100 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <% include ../partials/header.ejs %>
-</head>
-
-<body>
-
-  <% include ../partials/nav.ejs %>
-
-<div class="jumbotron text-center">
-  <div class="container">
-    <a href="/" class="lang-logo">
-      <img src="/lang-logo.png">
-    </a>
-    <h1>Getting Started with Node on Heroku</h1>
-    <p>This is a sample Node application deployed to Heroku. It's a reasonably simple app - but a good foundation for understanding how to get the most out of the Heroku platform.</p>
-    <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"><span class="glyphicon glyphicon-flash"></span> Getting Started with Node</a>
-    <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/node-js-getting-started"><span class="glyphicon glyphicon-download"></span> Source on GitHub</a>
-  </div>
-</div>
-<div class="container">
-  <div class="alert alert-info text-center" role="alert">
-    To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to the <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs" class="alert-link">Getting Started with Node on Heroku</a> tutorial.
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-info-sign"></span> How this sample app works</h3>
-      <ul>
-        <li>This app was deployed to Heroku, either using Git or by using <a href="https://github.com/heroku/node-js-getting-started">Heroku Button</a> on the repository.</li>
-
-        <li>When Heroku received the source code, it fetched all the dependencies in the <a href="https://github.com/heroku/node-js-getting-started/blob/master/package.json">package.json</a>, creating a deployable slug.</li>
-        <li>The platform then spins up a dyno, a lightweight container that provides an isolated environment in which the slug can be mounted and executed.</li>
-        <li>You can scale your app, manage it, and deploy over <a href="https://addons.heroku.com/">150 add-on services</a>, from the Dashboard or CLI.</li>
-      </ul>
-    </div>
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
-      <ul>
-        <li>If you are following the <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">Getting Started</a> guide, then please head back to the tutorial and follow the next steps!</li>
-        <li>If you deployed this app by deploying the Heroku Button, then in a command line shell, run:</li>
-        <ul>
-          <li><code>git clone https://github.com/heroku/node-js-getting-started.git</code> - this will create a local copy of the source code for the app</li>
-          <li><code>cd node-js-getting-started</code> - change directory into the local source code repository</li>
-          <li><code>heroku git:remote -a &lt;your-app-name></code> - associate the Heroku app with the repository</li>
-          <li>You'll now be set up to run the app locally, or <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs#push-local-changes">deploy changes</a> to Heroku</li>
-        </ul>
-      </ul>
-      <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
-      <ul>
-        <li><a href="https://www.heroku.com/home">Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/">Heroku Dev Center</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">Getting Started with Node on Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/deploying-nodejs">Deploying Node Apps on Heroku</a></li>
-      </ul>
-    </div>
-  </div> <!-- row -->
-   <div class="alert alert-info text-center" role="alert">
-    Please do work through the Getting Started guide, even if you do know how to build such an application.  The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
-  </div>
-</div>
-
-
-</body>
+<html lang="en">
+    <head>
+		<% include ../partials/header.ejs %>
+    </head>
+    <body>
+	<nav>
+		<% include ../partials/nav.ejs %>
+	</nav>
+        <main>            
+            <div class="floatpage" id="default" >
+				<form method="post" action="index.php">
+					<div class="field-wrapper">
+						<label>User Name</label>
+						<input type="text" name="UserName">
+					</div>
+					<div class="field-wrapper">
+						<label>Password</label>
+						<input type="text" name="userPassword">
+					</div>
+					<div class="field-wrapper">
+						<input type="submit" name="btnLogin" onclick=""></input>
+					</div>
+				</form>
+            </div>
+		</main>
+    </body>
 </html>
+<script>
+//set up temporary SESSION system user id. When I figure out how to set up actual login info, this will get replaced.
+const SESS_UserId = 0;
+
+
+
+
+/*
+Upon entering the site --> DEFAULT is set to login info
+Upon Login FAILURE --> Set DEFAULT to login information again and inform the user they messed up
+Upon Login SUCCESS --> Reveal Navigation, set DEFAULT to Generate Menu button, set SESS_UserId to current sUserId
+Upon Generate Menu button click --> Use session user ID to find x recipes by SESS_UserId and all associated Ingredients by Recipe_Id. Iterate through list and set DEFAULT TO div with all recipes and shopping list div with all ingredients
+Upon Logout --> DEFAULT is set to login info
+Upon Recipe Center Button Click --> Set DEFAULT to show buttons for Add Recipe, Edit Recipe, Delete Recipe, Set SESS_recipeId to NULL
+
+Upon Add Recipe Button --> DEFAULT is set to form with recipe fields and Next Button
+Upon Add Recipe Next Button --> call addRecipe, set SESS_recipeId to returned recipe_id, set DEFAULT to form with all associated ingredients, Add Ingredient fields, Ingredient Add Button, Instructions Button
+Upon Ingredient Add Button --> call addIngredient, refresh the form
+Upon Instructions Button --> set DEFAULT to form with all associated instructions, add Instruction Fields, Add Instructions button, Instruction Finish Button
+Upon Instruction Add Button --> call add Instructions, refresh the form
+Upon Finish Recipe Add Button --> Set DEFAULT to view recipe record, all ingredients, and all instructions
+
+Upon Delete Recipe Button--> Set DEFAULT to list of recipes by SESS_UserId, with delete buttons by each
+Upon Single Recipe Delete --> Set SESS_recipeId to selected recipe to delete, call deleteRecipeById, deleteInstructionByRecipeId, deleteIngreidentsByRecipeId, Set DEFAULT to confirmation
+
+Upon Edit Recipe Button --> Set DEFAULT to list of Recipes by SESS_UserId with Edit buttons by each
+Upon Edit Single Recipe Button --> Set DEFAULT to form with fields populated with recipe information and Edit Current Recipe Button, set SESS_recipeId to current recipe 
+Upon Edit Current Recipe Button --> Call editRecipeById, set DEFAULT to list of ingredients by SESS_recipeId with Edit Current Ingredient Button on each, and Edit Instructions Button
+Upon Edit Current Ingredient Button --> Call updateIngredientById and refresh DEFAULT to Upon Edit Current Recipe Button state
+Upon Edit Instructions Button --> Call viewRecipeInstructions with Edit Current Instruction Buttons on each, and Finish Button
+Upon Edit Current Instruction Button --> Call updateInstructionById and refresh DEFAULT to Upon Edit Instructions Button state
+
+add callback functions to model functions
+make controllers do all the work to get the right info to the views
+https://video.byui.edu/media/313-11-spa-scriptures-part4-mvc/0_rsdj98mf
+
+
+
+*/
+	// Create XMLHttpRequest Object
+	var aRequest = new XMLHttpRequest();
+
+	//Make sure the request is finished
+	//Check the ready state and stauts whenever the ready state changes
+	aRequest.onreadystatechange = function () {
+		//This function checks the ready state and status to make sure its finished and OK
+		if (aRequest.readyState == 4 && aRequest.status == 200) {
+			//Parse the JSON return
+			var aGames = JSON.parse(aRequest.responseText);
+			
+			//Prepare JSON Data
+			var aOutputString = "Name: " + aGames.recipe_name; 
+			aOutputString += "<br>";
+			aOutputString += "Description: " + aGames.recipe_desc;
+			aOutputString += "<br>";
+			aOutputString += "User Id: " + aGames.s_user_id;
+			aOutputString += "<br>";
+			
+			// Print the response to the HTML
+			document.getElementById('default').innerHTML = aOutputString;
+		}
+	}
+
+	var aURL = "/viewRecipe?recipeId=1";
+	
+	// Open (initialize) the request
+	aRequest.open("GET", aURL, true); // HTTP Request Method (GET, POST, etc.), 
+
+	// Send the Request
+	aRequest.send();
+	
+</script>

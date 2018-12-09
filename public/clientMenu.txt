@@ -1,0 +1,97 @@
+function procMenu() {
+	console.log('Getting Menu...');
+	
+	/*
+	this will be turned on when i set the login info. 
+	var sUserId = $('#sUserId').val();
+	console.log('Id: ' + sUserId);
+	*/
+	//this is what Im using while waiting to make login happen
+	var sUserId = 2;
+	console.log('UserId: ' + sUserId);
+	//Fill this with recipe info to be used throughout the operations
+	var listRecipe = [];
+	$.ajax({
+	    url: '/viewRecipeBySUserId?sUserId=' + sUserId,
+	    type: 'GET',
+		beforeSend: function(request) {
+			request.setRequestHeader("Access-Control-Allow-Origin", "*");
+		},
+		complete: function (jqXHR, textStatus) {
+			console.log('complete');
+		},
+		crossDomain: true, 
+ 	    success: function (data) {
+			
+			for (var i = 0; i < 7; i++) {
+				//find a random index within the array
+				var rndNum = Math.floor(Math.random() * Math.floor(data.length));
+				//Push the array entry into the array
+				listRecipe.push(data[rndNum]);
+				//log recipe information
+				console.log('index: ' + rndNum + ' Recipe Id: ' + data[rndNum].recipe_id + ' currRecipeName: ' + data[rndNum].recipe_name + ' currRecipeDesc: ' + data[rndNum].recipe_desc);			
+			}
+			
+			//console.log(listRecipe);
+			
+			//get ingredients for each recipe in recipeList
+			for (var i = 0; i < listRecipe.length; i++) {
+				var recipeId = listRecipe[i].recipe_id;
+				console.log('recipe Id for getting ingredients: ' + recipeId);
+				
+				$.ajax({
+					url: '/viewRecipeIngredients?recipeId=' + recipeId,
+					type: 'GET',
+					beforeSend: function(request) {
+						request.setRequestHeader("Access-Control-Allow-Origin", "*");
+					},
+					complete: function (jqXHR, textStatus) {
+						console.log('ingredients complete');
+						$('#msgShoppingList').text('COMPLETE');
+					},
+					crossDomain: true, 
+					success: function (data) {	
+						//print recipe and instruction info in console
+						console.log('recipe info for recipe: ' + recipeList[i] + ' ingredients: ' + data);
+						
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+					   console.log('error');
+					}		
+				});
+			}
+			
+			
+			//for (var i = 0; i < data.length; i++) {
+			//	var recipeId = data[i].recipe_id;
+			//	console.log(recipeId);
+			//}
+			//$('#msgMenu').html('<p>' + listRecipe + '</p>');			
+	    },
+	    error: function (jqXHR, textStatus, errorThrown) {
+		   console.log('error');
+	    }		
+	});
+	
+
+	
+
+	
+	
+		/*
+		get all recipes from the user
+		pick 7 at random
+		store ids into recipe array
+		Starting with the first recipe id, get all recipe information and put it into a div
+		then, using that recipe id, get all instructions and put them into an ordered list within the recipe div
+		move to the next recipe id
+		
+		loop through the recipe id array and get all ingredients, sort them by by sort order
+		loop through array and dump them in a list
+		move to next recipe and ingredientsdump all info into a shopping list div
+		
+		
+	*/
+	
+	
+}
