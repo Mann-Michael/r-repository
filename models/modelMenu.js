@@ -33,7 +33,7 @@ function getRecipeBySUserId(sUserId, callback) {
 function getRecipeAndInstructionsBySUserId(sUserId, callback) {
 	console.log('Get recipe ids from db with sUserId:', sUserId);
 	
-	var sql = "SELECT recipe.recipe_id, recipe.recipe_name, recipe. recipe_desc, recipe.s_user_id,	instruction.instruction_desc, instruction.instruction_order FROM recipe INNER JOIN instruction ON recipe.recipe_id = instruction.recipe_id WHERE s_user_id = $1::int ORDER BY recipe.recipe_id, instruction.instruction_order";
+	var sql = "SELECT recipe.recipe_id, recipe.recipe_name, recipe. recipe_desc, recipe.s_user_id,	instruction.instruction_desc, instruction.instruction_order FROM recipe LEFT JOIN instruction ON recipe.recipe_id = instruction.recipe_id WHERE s_user_id = $1::int ORDER BY recipe.recipe_id, instruction.instruction_order";
 	var params = [sUserId];
 	pool.query(sql, params, function(err, result){
 		if(err)  {

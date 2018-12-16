@@ -1,15 +1,17 @@
 function procMenu() {
 	console.log('Getting Menu...');
+	//clear current menu
+	$('#menuMaker').html('');
 	
 	/*
 	this will be turned on when i set the login info. 
 	var sUserId = $('#sUserId').val();
 	console.log('Id: ' + sUserId);
 	*/
-	//this is what Im using while waiting to make login happen
-	var sUserId = 1;
+	//this is what I'm using while waiting to make login happen
+	var sUserId = 3;
 	console.log('UserId: ' + sUserId);
-	
+
 	$.ajax({
 	    url: '/viewRecipeAndInstructionsBySUserId?sUserId=' + sUserId,
 	    type: 'GET',
@@ -40,8 +42,8 @@ function procMenu() {
 				if (pushThisID) {
 					idList.push(data[rndNum].recipe_id);
 					
-					var strOutput = '<div>';
-						strOutput += '<h1>' + data[rndNum].recipe_name + '</h1>';
+					var strOutput = '<div class="menu-wrapper">';
+						strOutput += '<h2>' + data[rndNum].recipe_name + '</h2>';
 						strOutput += '<p>' + data[rndNum].recipe_desc + '</p>';
 						strOutput += '<h3>Instructions</h3>';
 						strOutput += '<ol>';
@@ -58,7 +60,7 @@ function procMenu() {
 						strOutput += '</ul>';
 					strOutput += '</div>';
 				
-					$('#msgRecipes').append(strOutput);
+					$('#menuMaker').append(strOutput);
 					
 					$.ajax({
 						url: '/viewRecipeIngredients?recipeId=' + data[rndNum].recipe_id,
@@ -92,44 +94,7 @@ function procMenu() {
 						}		
 					});
 				}
-				
 			}
-			
-			//console.log(listRecipe);
-			
-			//get ingredients for each recipe in recipeList
-			/*for (var i = 0; i < listRecipe.length; i++) {
-				var recipeId = listRecipe[i].recipe_id;
-				console.log('recipe Id for getting ingredients: ' + recipeId);
-				
-				$.ajax({
-					url: '/viewRecipeIngredients?recipeId=' + recipeId,
-					type: 'GET',
-					beforeSend: function(request2) {
-						request2.setRequestHeader("Access-Control-Allow-Origin", "*");
-					},
-					complete: function (jqXHR2, textStatus2) {
-						console.log('ingredients complete');
-						$('#msgShoppingList').text('COMPLETE');
-					},
-					crossDomain: true, 
-					success: function (data2) {	
-						//print recipe and instruction info in console
-						console.log('recipe info for recipe: ' +  ' ingredients: ' + data2);
-						
-					},
-					error: function (jqXHR2, textStatus2, errorThrown2) {
-					   console.log('error');
-					}		
-				});
-			}*/
-			
-			
-			//for (var i = 0; i < data.length; i++) {
-			//	var recipeId = data[i].recipe_id;
-			//	console.log(recipeId);
-			//}
-			//$('#msgMenu').html('<p>' + listRecipe + '</p>');			
 	    },
 	    error: function (jqXHR, textStatus, errorThrown) {
 		   console.log('error');

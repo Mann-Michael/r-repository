@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-		<title>Recipe Repository INDEX 2</title>
+		<title>Recipe Repository - Add Recipe</title>
 		<meta charset="utf-8"/>
 		<link href="stylesheets/style.css" type="text/css" rel="stylesheet" />
 		<link href="https://fonts.googleapis.com/css?family=Antic+Slab" rel="stylesheet">
@@ -13,18 +13,20 @@
 	<nav>
 		<div>
 			<ul>
-				<li><a href="/viewMenu.html">Generate Menu</a></li>
+				<li><a href="/viewMenu.html">Menu Maker</a></li>
 				<li><a href="/viewRecipe.html">Recipe Center</a></li>
-				<li><a href="/viewUser.html">User</a></li>
+				<!--<li><a href="/viewUser.html">User</a></li>-->
 			</ul>
 		</div>
 	</nav>
-        <main>            
+        <main>
             <div class="floatpage" id="default" >
-					<div class="field-wrapper">
-						<button onclick="procMenu()">Generate Menu</button>
-					</div>
-				<div id="msgRecipes"></div>
+				<h1>Menu Maker</h1>
+				<div class="menu-wrapper">
+					<input type="submit" value="Generate Menu" onclick="procMenu()"></input>
+				</div>
+				<div id="menuMaker">
+				</div>
             </div>
 		</main>
     </body>

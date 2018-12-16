@@ -51,29 +51,8 @@ li {
 }
 
 .floatpage {
-    padding-top: 230px;
+    padding-top: 125px;
     padding-bottom: 50px;
-}
-
-/*==============TEMP============*/
-
-#div1 {
-	background-color: black;
-	font-size: 1em;
-}
-
-#div2 {
-	background-color: green;
-	font-size: 1.5em;
-}
-
-#div3 {
-	background-color: pink;
-	font-size: 2em;
-}
-
-#div1:hover , #div2:hover , #div3:hover {
-	font-weight: bold;
 }
 
 /*==============Header============*/
@@ -152,7 +131,6 @@ nav a:active {
 a:link{
     color: #cd7c16;
     text-decoration: none;
-    /*font-weight: bold;*/
 }
 a:visited{
     color: #cd7c16;
@@ -198,7 +176,6 @@ textarea {
     height: 100px;
 }
 
-
 input[type=image] {
     width: 75%;
 }
@@ -210,6 +187,42 @@ input[type=image] {
     clear: left;
 }
 
+.menu-wrapper {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#recipeDesc {
+	width: 500px;
+	height: 100px;
+}
+
+#recipeName {
+	width: 250px;
+}
+
+input[type=submit] {
+  background-color: #32ad5f;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  padding: 10px 25px;
+  cursor: pointer;
+}
+
+input[type=button] {
+  background-color: white;
+  border: solid;
+  border-color: #cd7c16;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: #cd7c16;
+  padding: 16px 32px;
+  cursor: pointer;
+}
 /*==============MAIN STYLE============*/
 
 main {
@@ -230,6 +243,8 @@ figcaption {
     margin: 10px 0px 30px 0px;
 }
 
+#menuMaker {
+}
 /*==============DEFAULT STYLE============*/
 #default-img {
     /*max-width: 400px;*/
@@ -237,44 +252,6 @@ figcaption {
 #default-content p {
     text-align: center;
     padding-bottom: 50px;
-}
-/*==============RESUME STYLE============*/
-#resume-img {
-    flex-grow: 1;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: -1;
-}
-#resume-content {
-    flex-grow: 3;
-}
-/*==============PROJECTS STYLE============*/
-#projects-img {
-    flex-grow: 1;
-    max-width: 400px;    
-}
-#projects-content {
-    flex-grow: 3;
-}
-/*==============REFERENCES STYLE============*/
-#references-img {
-}
-#references-content {
-    display: flex;
-}
-.references {
-    flex-grow: 1;
-    max-width: 333px;
-    padding: 0px 10px 0px 10px;
-}
-/*==============CONTACT STYLE============*/
-#contact-img {
-    width: 200px;
-    height: 400px;
-}
-#contact-content {
-    flex-grow: 1;
 }
 /*==============FOOTER STYLE============*/
 

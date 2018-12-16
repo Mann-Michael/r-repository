@@ -13,11 +13,14 @@ module.exports = {
 	updateIngredientById: updateIngredientById, 
 	updateInstructionById: updateInstructionById, 
 	getRecipeById: getRecipeById, 
+	getRecipesBySUserId: getRecipesBySUserId,
 	getIngredientsByRecipeId: getIngredientsByRecipeId,
 	getInstructionsByRecipeId: getInstructionsByRecipeId, 
-	deleteRecipeById: deleteRecipeById, 
+	deleteRecipeById: deleteRecipeById,
 	deleteIngredientById: deleteIngredientById, 
-	deleteInstructionById: deleteInstructionById
+	deleteInstructionById: deleteInstructionById, 
+	deleteIngredientsByRecipeId: deleteIngredientsByRecipeId, 
+	deleteInstructionsByRecipeId: deleteInstructionsByRecipeId
 };
 
 //MODEL Functions
@@ -33,9 +36,9 @@ function insertRecipe(recipeName, recipeDesc, sUserId, callback) {
 			callback(err, null);
 		}
 		
-	console.log('Inserted DB result');
-	
-	callback(null, result.rows);
+		console.log('Inserted DB result');
+		
+		callback(null, result.rows);
 	});
 }
 
@@ -53,7 +56,8 @@ function insertIngredient(ingredientName, amount, measurementId, recipeId, callb
 		
 	console.log('Inserted DB result');
 	
-	callback(null, result.rows);
+	//callback(null, result.rows);
+	callback(null, result);
 	});
 }
 
@@ -71,7 +75,7 @@ function insertInstruction(instructionDesc, instructionOrder, recipeId, callback
 		
 	console.log('Inserted DB result');
 	
-	callback(null, result.rows);
+	callback(null, result);
 	});
 }
 
@@ -134,6 +138,24 @@ function getRecipeById(recipeId, callback) {
 	
 	var sql = "SELECT recipe_name, recipe_desc, s_user_id FROM recipe WHERE recipe_id = $1::int";
 	var params = [recipeId];
+	pool.query(sql, params, function(err, result){
+		if(err)  {
+			console.log('An error with the DB occured');
+			console.log(err);
+			callback(err, null);
+		}
+	
+	console.log('Found DB result: ' + JSON.stringify(result.rows));
+	
+	callback(null, result.rows);
+	});
+}
+
+function getRecipesBySUserId(sUserId, callback) {
+	console.log('Get all recipes from db with sUserId:', sUserId);
+	
+	var sql = "SELECT recipe_id, recipe_name, recipe_desc, s_user_id FROM recipe WHERE s_user_id = $1::int ORDER BY recipe_id ASC";
+	var params = [sUserId];
 	pool.query(sql, params, function(err, result){
 		if(err)  {
 			console.log('An error with the DB occured');
@@ -237,3 +259,38 @@ function deleteInstructionById(instructionId, callback) {
 	});
 }
 
+function deleteIngredientsByRecipeId(recipeId, callback) {
+	console.log('deleting ingredient with recipeId: ', recipeId);
+	
+	var sql = "DELETE FROM ingredient WHERE recipe_id = $1::int RETURNING recipe_id";
+	var params = [recipeId];
+	pool.query(sql, params, function(err, result){
+		if(err)  {
+			console.log('An error with the DB occured');
+			console.log(err);
+			callback(err, null);
+		}
+		
+	console.log('Deleted DB result');
+	
+	callback(null, result.rows);
+	});
+}
+
+function deleteInstructionsByRecipeId(recipeId, callback) {
+	console.log('deleting instruction with recipeId: ', recipeId);
+	
+	var sql = "DELETE FROM instruction WHERE recipe_id = $1::int RETURNING recipe_id";
+	var params = [recipeId];
+	pool.query(sql, params, function(err, result){
+		if(err)  {
+			console.log('An error with the DB occured');
+			console.log(err);
+			callback(err, null);
+		}
+		
+	console.log('Deleted DB result');
+	
+	callback(null, result.rows);
+	});
+}

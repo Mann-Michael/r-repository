@@ -13,28 +13,24 @@
 	<nav>
 		<div>
 			<ul>
-				<li><a href="/viewMenu.html">Generate Menu</a></li>
+				<li><a href="/viewMenu.html">Menu Maker</a></li>
 				<li><a href="/viewRecipe.html">Recipe Center</a></li>
-				<li><a href="/viewUser.html">User</a></li>
+				<!--<li><a href="/viewUser.html">User</a></li>-->
 			</ul>
 		</div>
 	</nav>
-        <main>            
+        <main> 
             <div class="floatpage" id="default" >
-				<form>
-					<div class="field-wrapper">
-						<label>Recipe Name</label>
-						<input type="text" id="recipeName">
-					</div>
-					<div class="field-wrapper">
-						<label>Recipe Description</label>
-						<input type="text" id="recipeDesc">
-					</div>
-					<div class="field-wrapper">
-						<button onclick="procAddRecipe()">Add Recipe</button>
-					</div>
-				</form>
-				<div class="message"></div>
+				<h1>Recipe Center</h1>
+				<div class="menu-wrapper">
+					<input type="button" value="Add Recipe" onclick="procAddRecipe()"></input>
+				</div>
+			<!--<div class="menu-wrapper">
+					<input type="button" value="Update Recipe" onclick="procListRecipesForUpdate()"></input>
+				</div>-->
+				<div class="menu-wrapper">
+					<input type="button" value="Delete Recipe" onclick="procListRecipesForDelete()"></input>
+				</div>
             </div>
 		</main>
     </body>
